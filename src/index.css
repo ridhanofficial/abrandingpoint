@@ -147,43 +147,30 @@ body {
   border-radius: 999px;
 }
 
-/* ─── BUTTON INTERACTIONS ────────────────────────────────────────────
-   Interaction: ripple wave from touch/click point (JS-spawned).
-   Hover state: background/color handled by Tailwind classes per button.
-   No transforms, no sweep fill — just a precise, tactile ripple.
+/* ─── BUTTON INTERACTIONS ─────────────────────────────────────────────
+   Hover  → background/color change via Tailwind (per-button classes).
+   Press  → subtle scale-down for tactile click/touch feedback.
+   Icon   → small directional nudge on hover only.
+   No movement, no sweep, no ripple, no lift.
    ─────────────────────────────────────────────────────────────────── */
 
 .btn-sweep {
-  position: relative;
-  overflow: hidden;
+  -webkit-tap-highlight-color: transparent; /* remove mobile blue flash */
+  transition: transform 0.12s ease;
 }
 
-/* Ripple element — injected by MagneticButton on every pointerdown */
-.mag-ripple {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.22);
-  pointer-events: none;
-  transform: scale(0);
-  opacity: 1;
-  animation: mag-ripple-expand 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.btn-sweep:active {
+  transform: scale(0.96);
 }
 
-@keyframes mag-ripple-expand {
-  to {
-    transform: scale(1);
-    opacity: 0;
-  }
-}
-
-/* Directional icon nudge — subtle, no rotation */
+/* Icon nudge — points in its natural ArrowUpRight direction */
 .btn-sweep .btn-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.25s ease;
+  transition: transform 0.2s ease;
 }
 
 .btn-sweep:hover .btn-icon {
-  transform: translate(3px, -3px);
+  transform: translate(2px, -2px);
 }
