@@ -37,7 +37,7 @@ export default function Home() {
           style={{ opacity: heroOpacity, scale: heroScale, y: heroY }}
           className="mx-auto grid w-full max-w-[1400px] grid-cols-1 items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-6 lg:px-12"
         >
-          <div className="relative z-10 order-2 lg:order-1">
+          <div className="relative z-10 lg:order-1">
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -88,7 +88,8 @@ export default function Home() {
             </motion.div>
           </div>
 
-          <div className="relative order-1 h-[320px] sm:h-[420px] lg:order-2 lg:h-[560px]">
+          {/* 3D element: desktop only — hidden on mobile & tablet */}
+          <div className="relative hidden lg:block lg:order-2 lg:h-[560px]">
             <Hero3D />
           </div>
         </motion.div>

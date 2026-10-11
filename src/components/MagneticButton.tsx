@@ -24,6 +24,22 @@ export default function MagneticButton({ children, className = "", as, ...props 
 
   const handleLeave = () => setPos({ x: 0, y: 0 });
 
+  /** Spawn a ripple wave at the exact touch/click coordinate */
+  const spawnRipple = (clientX: number, clientY: number, target: HTMLElement) => {
+    const rect = target.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 2.5;
+    const ripple = document.createElement("span");
+    ripple.className = "mag-ripple";
+    ripple.style.cssText = [
+      `width:${size}px`,
+      `height:${size}px`,
+      `left:${clientX - rect.left - size / 2}px`,
+      `top:${clientY - rect.top - size / 2}px`,
+    ].join(";");
+    target.appendChild(ripple);
+    ripple.addEventListener("animationend", () => ripple.remove(), { once: true });
+  };
+
   return (
     <div
       ref={ref}
@@ -31,6 +47,7 @@ export default function MagneticButton({ children, className = "", as, ...props 
       onMouseLeave={handleLeave}
       className="inline-block"
       data-cursor="pointer"
+      onPointerDown={(e) => spawnRipple(e.clientX, e.clientY, e.currentTarget)}
     >
       <Component
         animate={{ x: pos.x, y: pos.y }}
